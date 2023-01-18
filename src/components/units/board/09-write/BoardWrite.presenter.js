@@ -7,8 +7,11 @@ export default function BoardWriteUI(props) {
       <RedInput type="text" onChange={props.onChangeWriter} myColor="blue" />
       제목: <input type="text" onChange={props.onChangeTitle} />
       내용: <input type="text" onChange={props.onChangeContents} />
-      <SubmitBtn isActive={props.isActive} onClick={props.onClickSubmit}>
-        GRAPHQL-API 요청하기
+      <SubmitBtn
+        isActive={props.isActive}
+        onClick={props.isEdit ? props.onClickUpdate : props.onClickSubmit}
+      >
+        {props.isEdit ? "수정" : "등록"}하기
       </SubmitBtn>
     </div>
   );
