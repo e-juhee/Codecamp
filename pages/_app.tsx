@@ -1,7 +1,8 @@
 // import '../styles/globals.css'
 import {ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client'
+import { AppProps } from 'next/app'
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component }:AppProps) {
 
   const client = new ApolloClient({
     uri: "http://backend-example.codebootcamp.co.kr/graphql",
@@ -10,7 +11,7 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <ApolloProvider client={client}>
-      <Component {...pageProps} />
+      <Component />
     </ApolloProvider>
   )
 }
