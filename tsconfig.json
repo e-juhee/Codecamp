@@ -1,25 +1,25 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": [
+    "target": "es5", // TS 코드가 실행될 때는 JS 코드로 변환되어서 실행되는데, 이때 어떤 버전의 JS로 변환할 지 지정
+    "lib": [ // window.alert 등과 같은 것들에 대한 타입도 체크할 것인지
       "dom",
       "dom.iterable",
       "esnext"
     ],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
+    "allowJs": true, // TS 파일에서 JS 파일을 import할 수 있게 할 것인지 (혼용 사용)
+    "skipLibCheck": true, // node_modules의 library도 체크할 것인지
+    "strict": true, // 타입을 엄격하게 체크
+    "forceConsistentCasingInFileNames": true, // 대소문자 구분 무시
+    "noEmit": true, // TS를 JS로 변경할 때 변경한 파일을 생성하지 않고 실행만
     "incremental": true,
     "esModuleInterop": true,
-    "module": "esnext",
+    "module": "esnext", // esnext: 모듈 방식. JS 최신 버전으로 다른 파일을 불러올 때 import 사용 | commonjs 방식. require 사용
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve"
   },
-  "include": [
+  "include": [ // 검증할 파일
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
