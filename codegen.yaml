@@ -1,5 +1,5 @@
 # 백엔드 주소
-schema: http://backend-example.codebootcamp.co.kr/graphql
+schema: http://backend-practice.codebootcamp.co.kr/graphql
 #  다운로드 받을 경로
 generates:
   ./src/commons/types/generated/types.ts:
