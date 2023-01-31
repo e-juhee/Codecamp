@@ -1,4 +1,5 @@
 import { useQuery, gql } from "@apollo/client";
+import styled from "@emotion/styled";
 import { MouseEvent, useState } from "react";
 import {
   IQuery,
@@ -23,6 +24,7 @@ const FETCH_BOARDS_COUNT = gql`
 
 export default function StaticRoutingMovedPage(): JSX.Element {
   const [startPage, setStartPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const { data, refetch } = useQuery<
     Pick<IQuery, "fetchBoards">,
@@ -36,43 +38,89 @@ export default function StaticRoutingMovedPage(): JSX.Element {
 
   const lastPage = Math.ceil((dataBoardsCount?.fetchBoardsCount ?? 10) / 10);
 
+  // 페이지 번호 클릭
   const onClickPage = (e: MouseEvent<HTMLSpanElement>): void => {
-    setStartPage(Number(e.currentTarget.id));
+    setCurrentPage(Number(e.currentTarget.id));
     void refetch({ page: Number(e.currentTarget.id) });
   };
+
+  // 이전 버튼 클릭
   const onClickPrevPage = (): void => {
     if (startPage - 10 < 0) return;
-    setStartPage(startPage - 10);
-    void refetch({ page: startPage - 10 });
+    setStartPage((prev) => prev - 10);
+    setCurrentPage(startPage - 1);
+    void refetch({ page: startPage - 1 });
   };
+
+  // 다음 버튼 클릭
   const onClickNextPage = (): void => {
     if (startPage + 10 <= lastPage) {
-      setStartPage(startPage + 10);
+      setStartPage((prev) => prev + 10);
+      setCurrentPage(startPage + 10);
       void refetch({ page: startPage + 10 });
     }
   };
+
   return (
-    <div>
+    <Wrapper>
       {data?.fetchBoards.map((el) => (
-        <div key={el._id}>
+        <BoardWrapper key={el._id}>
           <span>{el.title}</span>
           <span>{el.writer}</span>
-        </div>
+        </BoardWrapper>
       ))}
-      <span onClick={onClickPrevPage}>이전페이지</span>
-      {new Array(10).fill("철수").map(
-        (_, index) =>
-          index + startPage <= lastPage && (
-            <span
-              key={index + 1}
-              id={String(index + startPage)}
-              onClick={onClickPage}
-            >
-              {index + startPage}
-            </span>
-          )
-      )}
-      <span onClick={onClickNextPage}>다음페이지</span>
-    </div>
+
+      <PaginationWrapper>
+        {/* 이전 버튼 */}
+        <Btn onClick={onClickPrevPage} isActive={startPage > 10}>
+          &lt;
+        </Btn>
+        {new Array(10).fill("").map((_, index) => {
+          if (index + startPage <= lastPage)
+            return (
+              <PageNumber
+                key={index + 1}
+                id={String(index + startPage)}
+                onClick={onClickPage}
+                isActive={currentPage === index + startPage}
+              >
+                {index + startPage}
+              </PageNumber>
+            );
+          else return <></>;
+        })}
+        {/* 다음 버튼 */}
+        <Btn onClick={onClickNextPage} isActive={startPage < lastPage - 10}>
+          &gt;
+        </Btn>
+      </PaginationWrapper>
+    </Wrapper>
   );
 }
+const Wrapper = styled.div`
+  position: relative;
+  height: 350px;
+`;
+const BoardWrapper = styled.div`
+  width: 400px;
+  height: 30px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+const PaginationWrapper = styled.div`
+  position: absolute;
+  bottom: 0;
+`;
+const Btn = styled.button`
+  ${(props: { isActive: boolean }) =>
+    props.isActive
+      ? { cursor: "pointer", color: "#000" }
+      : { cursor: "not-allowed", color: "#e4e4e4" }};
+`;
+const PageNumber = styled.span`
+  color: ${(props: { isActive: boolean }) => (props.isActive ? "red" : "#000")};
+  display: inline-block;
+  width: 40px;
+  padding: 10px;
+  cursor: pointer;
+`;
