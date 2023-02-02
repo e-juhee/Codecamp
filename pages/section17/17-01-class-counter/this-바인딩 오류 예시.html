@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <title>This의 이해</title>
+    <script>
+      // Class를 정의합니다.
+      class ClassCounterPage {
+        count = 10;
+
+        onClickCountUp() {
+          console.log("button의 count: ", this.count);
+        }
+
+        // render 안의 태그들이 실제로 화면에 그려지는 방식입니다. (설명을 위해 간소화한 예시로, 실제 구동방식과 차이가 있습니다.)
+        render() {
+          // button 태그를 생성합니다.
+          const button = document.createElement("button");
+          button.innerText = "카운트 Up";
+
+          // onClick 함수는 EventListener에 연결해줍니다.
+          button.addEventListener("click", this.onClickCountUp);
+
+          // 만든 버튼을 화면에 추가합니다.
+          document.body.appendChild(button);
+        }
+      }
+
+      // 윈도우가 로드되면 실행됩니다.
+      window.onload = () => {
+        // Class를 통해 인스턴스를 만들고 render를 통해 화면에 그려줍니다.
+        const counter = new ClassCounterPage();
+        counter.render();
+      };
+    </script>
+  </head>
+  <body></body>
+</html>
