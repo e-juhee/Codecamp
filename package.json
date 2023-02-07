@@ -11,10 +11,12 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.0.1",
-    "@apollo/client": "^3.7.3",
+    "@apollo/client": "^3.7.1",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@types/apollo-upload-client": "^17.0.2",
     "antd": "^5.1.2",
+    "apollo-upload-client": "^17.0.0",
     "axios": "^1.2.2",
     "firebase": "9.10.0",
     "graphql": "^16.6.0",
@@ -43,5 +45,8 @@
     "husky": "^8.0.3",
     "prettier": "2.8.3",
     "typescript": "*"
+  },
+  "resolutions": {
+    "@types/react": "17.0.2"
   }
 }

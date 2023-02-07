@@ -5,6 +5,7 @@ import LayoutHeader from "./header";
 import LayoutNavigation from "./navigation";
 
 const HIDDEN_HEADERS = ["/section14/14-01-props-children"];
+
 export default function Layout(props: { children: JSX.Element }): JSX.Element {
   const router = useRouter();
   const isHiddenHeader = HIDDEN_HEADERS.includes(router.asPath);
